@@ -1,2 +1,2 @@
-# msg2key
+# msg
 encrypted web based messaging
