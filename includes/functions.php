@@ -8,7 +8,7 @@ class Database{
 	}
 	
 	public function connect(){
-		$this->connection = mysql_connect("localhost","user","pass");
+		$this->connection = mysql_connect("localhost","root","");
 		$this->database = mysql_select_db("openmessage", $this->connection);
 		if (!$this->connection){
 			die('Could not connect: ' . mysql_error());
@@ -70,7 +70,7 @@ class Meess{
 	}
 
 	function output_message_insert() { 
-		$expire = mktime(0, 0, 0, date("m"), date("d")+1, date("Y"));
+		$expire = time()+86400;
 		return 	"<fieldset>
 				 <legend> Ok </legend>
 				 <div class=\"message\">The message-key is: ". $this->get_user_key() ."<br />	 
@@ -188,13 +188,12 @@ class Meess{
 		return 	"<fieldset>
 				 <legend> Message: </legend>
 				 <div class=\"message\"> ". $message ."<br /></div>
-				 <div class=\"message_red\">- This message has now expired. </div>
 				 </fieldset>";
 	}
 
 	function datetime_to_text($datetime) {
 	  $dtime = strtotime($datetime);
-	  return strftime("%B %d, %Y at %I:%M %p", $dtime);
+	  return date(DATE_RFC822, $datetime);
 	}
 
 	function getkey($message) {
